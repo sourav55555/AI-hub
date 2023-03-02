@@ -8,6 +8,7 @@ const ai = async(showall)=>{
         }
         else{
             datas.slice(0,6).map(data => displayAllAi(data));
+            seeMore.classList.remove("hidden");
         }
     }
     catch(error){
@@ -20,19 +21,23 @@ const cards = document.getElementById("cards");
 const displayAllAi = data =>{
 
     const div = document.createElement("div");
-    div.classList = "border-2 p-6 card rounded-xl text-left"
+    div.classList = "border-2 p-6 card rounded-xl text-left";
+    const {image, features, name} = data
     div.innerHTML=`
-    <img class="mb-6 h-64 w-full" src="Rectangle 23.png" alt="">
+    <img class="mb-6 h-64 w-full rounded-md" src="${image}" alt="">
     <div class="border-b-2 pb-4">
         <p class="mb-3 text-xl font-semibold">Features</p>
-        <p class="text-gray-600 text-sm">sfdf</p>
-        <p class="text-gray-600 text-sm">dfgsdg</p>
-        <p class="text-gray-600 text-sm">sfgdsfg</p>
+        <ol class="list-decimal ml-5">
+            <li class="text-gray-600 text-sm">${features[0]}</li>
+            <li class="text-gray-600 text-sm">${features[1]}</li>
+            <li class="text-gray-600 text-sm">${features[2]}</li>
+        </ol>
+        
     </div>
 
     <div class="mt-4 flex justify-between items-center">
         <div>
-            <p class="mb-3 text-xl font-semibold">ChatGPT</p>
+            <p class="mb-3 text-xl font-semibold">${name}</p>
             <p>
                 <img src="icons/icons8-tear-off-calendar-25.png" alt="">
             </p>
@@ -44,5 +49,11 @@ const displayAllAi = data =>{
     `;
     cards.appendChild(div);
 }
+
+const seeMore = document.getElementById("seeMore");
+seeMore.addEventListener("click", function(){
+    ai(true);
+    seeMore.classList.add("hidden");
+})
 
 ai();
