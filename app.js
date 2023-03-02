@@ -26,7 +26,7 @@ const displayAllAi = data =>{
 
     const div = document.createElement("div");
     div.classList = "border-2 p-6 card rounded-xl text-left";
-    const {image, features, name} = data
+    const {id, image, features, name, published_in} = data
     div.innerHTML=`
     <img class="mb-6 h-64 w-full rounded-md" src="${image}" alt="">
     <div class="border-b-2 pb-4">
@@ -42,17 +42,28 @@ const displayAllAi = data =>{
     <div class="mt-4 flex justify-between items-center">
         <div>
             <p class="mb-3 text-xl font-semibold">${name}</p>
-            <p>
+            <p class="flex gap-2">
                 <img src="icons/icons8-tear-off-calendar-25.png" alt="">
+                ${published_in}
             </p>
         </div>
-        <button class="bg-red-100 w-10 h-10 text-center rounded-full">
+        <button onclick="showModal('${id}')" class="bg-red-100 w-10 h-10 text-center rounded-full">
             <img class="w-4 mx-auto" src="icons/icons8-right-arrow-30.png" alt="">
         </button>
     </div>
     `;
     cards.appendChild(div);
 }
+
+// Modal
+const modal = document.getElementById("modal");
+const showModal = async(id)=>{
+    modal.classList.remove("hidden");
+}
+
+document.querySelector(".modal-close").addEventListener("click",function(){
+    modal.classList.add("hidden");
+})
 
 const seeMore = document.getElementById("seeMore");
 seeMore.addEventListener("click", function(){
