@@ -1,3 +1,5 @@
+const spinner = document.getElementById("spinner");
+
 const ai = async(showall)=>{
     try{
         const req = await fetch('https://openapi.programming-hero.com/api/ai/tools');
@@ -5,10 +7,12 @@ const ai = async(showall)=>{
         const datas =  data.data.tools;
         if(showall){
            datas.map(data => displayAllAi(data));
+           spinner.classList.add("hidden");
         }
         else{
             datas.slice(0,6).map(data => displayAllAi(data));
             seeMore.classList.remove("hidden");
+            spinner.classList.add("hidden");
         }
     }
     catch(error){
@@ -54,6 +58,7 @@ const seeMore = document.getElementById("seeMore");
 seeMore.addEventListener("click", function(){
     ai(true);
     seeMore.classList.add("hidden");
+    spinner.classList.remove("hidden");
 })
 
 ai();
