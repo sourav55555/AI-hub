@@ -6,25 +6,39 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>AI Universe</title>
 </head>
+
 <style>
 
-@media (max-width: 768px) {
-    .modal-body{
-        overflow-y: scroll;
+    .card{
+        transition: all .25s linear;
     }
-}
+    
+
+    @media (max-width: 768px) {
+        .modal-body{
+            overflow-y: scroll;
+    }
+    }
 </style>
+
 <body>
 
     <div class="container text-center md:p-8 p-4 mx-auto">
-        <h2 class="text-3xl font-bold mt-5 mb-7">AI Universe Hub</h2>
+        <h2 class="text-3xl font-bold mt-5 mb-7">
+            AI Universe Hub
+        </h2>
         <button class="bg-red-600 text-white font-semibold py-4 px-5 rounded-3xl" id="sort-date">Sort By Date</button>
+
+        <!-- cards section  -->
         <section class="mt-8 mb-10">
             <div class="cards grid md:grid-cols-3 grid-cols-1 gap-6" id="cards">
                 
             </div>
         </section>
+
         <button class="bg-red-600 text-white font-semibold py-4 px-5 rounded-3xl hidden" id="seeMore">See More</button>
+
+        <!-- loading spinner  -->
         <img class="animate-spin mx-auto" id="spinner" src="icons/icons8-spinner-50.png" alt="">
     </div>
 
@@ -38,11 +52,14 @@
             <p class="modal-close md:absolute fixed bg-red-200 md:top-[-17px] md:right-[-17px] right-0 top-[8%] rounded-full p-1">
                     <img class="h-6 cursor-pointer w-6" src="icons/icons8-cross-mark-48.png" alt="">
             </p>
+
+            <!-- modal body  -->
             <div class="flex md:flex-row flex-col-reverse gap-5">
                 <div class="md:w-1/2 w-full border-red-400 border-2 bg-red-50 rounded-2xl md:p-8 p-4" id="modal-left">
                     <img class="animate-spin mx-auto" id="spinnerModal" src="icons/icons8-spinner-50.png" alt="">
                     
                 </div>
+                
                 <div class="md:w-1/2 w-full border-2 rounded-lg md:p-8 p-4 text-center" id="modal-right">
                     <img class="animate-spin mx-auto" id="spinnerModal" src="icons/icons8-spinner-50.png" alt="">
                     

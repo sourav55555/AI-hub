@@ -87,7 +87,7 @@ const displayAllAi = data =>{
     data.features.forEach(element => {
         li += `<li class="text-gray-600 text-sm">${element}</li>`
     });
-    div.classList = "border-2 p-6 card rounded-xl text-left";
+    div.classList = "border-2 p-6 card rounded-xl text-left hover:translate-y-[-1.1rem] hover:shadow-xl";
     const {id, image, features, name, published_in} = data
     div.innerHTML=`
     <img class="mb-6 h-64 w-full rounded-md" src="${image}" alt="">
