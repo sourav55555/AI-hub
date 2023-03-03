@@ -118,9 +118,11 @@ const displayAllAi = data =>{
 // Modal
 const modal = document.getElementById("modal");
 const modalLeft = document.getElementById("modal-left");
-const modalRight = document.getElementById("modal-right")
+const modalRight = document.getElementById("modal-right");
+const spinnerModal = document.getElementById("spinnerModal");
 const showModal = async(id)=>{
     modal.classList.remove("hidden");
+
     let idData = {};
     try{
         const url = `https://openapi.programming-hero.com/api/ai/tool/${id}`;
@@ -132,7 +134,9 @@ const showModal = async(id)=>{
         console.log(error);
     }
 
-    let {description, pricing, features, integrations} = idData;
+    let {description, pricing, features, integrations, image_link, input_output_examples, accuracy} = idData;
+
+    let accuracyInt = accuracy.score * 100;
 
     let featuresLi = ""
     for(let singleFeature in features){
@@ -140,27 +144,35 @@ const showModal = async(id)=>{
     }
 
     let integrationsLi = '';
-    integrations.forEach(element => {
-        integrationsLi += `<li class="text-gray-600 text-sm">${element}</li>`
-    });
+    if(integrations){
+        integrations.forEach(element => {
+            integrationsLi += `<li class="text-gray-600 text-sm">${element}</li>`
+        });
+    }
+    else{
+        integrationsLi = `<li>No Data Found.</li>`
+    }
+    
 
+
+    // modal left dynamic html
     modalLeft.innerHTML=`
     <p class="mb-5 w-11/12 text-xl font-semibold">${description}</p>
         <div class="flex justify-between mb-4">
             <div class="flex items-center p-4 h-24 w-28 rounded-2xl text-center bg-white font-semibold text-green-600">
-                <p class="leading-5">${pricing[0].price}
-                    ${pricing[0].plan}
+                <p class="leading-5">${pricing ? pricing[0].price === "No cost" ? "Free Of Cost /" : pricing[0].price == 0 ? "$0/month" : pricing[0].price : "Free Of Cost /"}
+                    Basic
                 </p>
             </div>
             <div class="flex items-center p-4 h-24 w-28 rounded-2xl text-center bg-white font-semibold text-yellow-600">
-                <p class="leading-5">${pricing[1].price}
-                        ${pricing[1].plan}
+                <p class="leading-5">${pricing ?pricing[1].price === "No cost" ? "Free Of Cost /" : pricing[1].price : "Free Of Cost /"}
+                        Pro
                 </p>
             </div>
             <div class="flex items-center p-4 h-24 w-28 font-semibold text-red-600 rounded-2xl text-center bg-white">
                 <p class="leading-5">
-                    ${pricing[2].price}
-                    ${pricing[2].plan}
+                    ${pricing ?pricing[2].price === "No cost" ? "Free Of Cost /" : pricing[2].price : "Free Of Cost /"}
+                    ${pricing ? pricing[2].plan : "Enterprise"}
                 </p>
             </div>
         </div>
@@ -179,6 +191,21 @@ const showModal = async(id)=>{
             </div>
         </div>
     `
+
+    // modal right dynamic html
+
+    modalRight.innerHTML=`
+    <div class="relative">
+        <img class="mb-5 rounded-lg" src="${image_link[0]}" alt="">
+        <div class="${accuracy.score ? '' : 'hidden'} rounded-xl px-3 py-2 bg-red-500 text-white w-fit absolute top-2 right-2 text-sm">
+            <p>${accuracyInt}% accuracy</p>
+        </div>
+    </div>
+    <p class="mb-4 text-xl font-semibold">${input_output_examples ? input_output_examples[0].input : "Can you give any example?"}</p>
+    <p>${input_output_examples ? input_output_examples[0].output : "No! Not Yet! Take a break!!!"}</p>
+    `
+
+    spinnerModal.classList.add("hidden");
 
 }
 
