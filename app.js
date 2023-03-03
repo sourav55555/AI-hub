@@ -9,16 +9,13 @@ const ai = async(showall,dateSort)=>{
         const data = await req.json();
         const datas =  data.data.tools;
         datesSort = datas;
-        console.log(dateSort);
         
         if(showall){
-            if(dateSort){
 
-                console.log("entered else", dateSort);
+            if(dateSort){
                 dateSort.map(data => displayAllAi(data));
                 spinner.classList.add("hidden");
 
-                
             }
             else{
                 datas.map(data => displayAllAi(data));
@@ -86,6 +83,10 @@ const cards = document.getElementById("cards");
 const displayAllAi = data =>{
 
     const div = document.createElement("div");
+    let li = "";
+    data.features.forEach(element => {
+        li += `<li class="text-gray-600 text-sm">${element}</li>`
+    });
     div.classList = "border-2 p-6 card rounded-xl text-left";
     const {id, image, features, name, published_in} = data
     div.innerHTML=`
@@ -93,9 +94,7 @@ const displayAllAi = data =>{
     <div class="border-b-2 pb-4">
         <p class="mb-3 text-xl font-semibold">Features</p>
         <ol class="list-decimal ml-5">
-        <li class="text-gray-600 ${features[0] ? "" : "hidden"} text-sm">${features[0] ? features[0] : ""}</li>
-            <li class="text-gray-600 ${features[1] ? "" : "hidden"} text-sm">${features[1] ? features[1] : ""}</li>
-            <li class="text-gray-600 ${features[2] ? "" : "hidden"} text-sm">${features[2] ? features[2] : ""}</li>
+            ${li}
         </ol>
         
     </div>
@@ -118,8 +117,69 @@ const displayAllAi = data =>{
 
 // Modal
 const modal = document.getElementById("modal");
+const modalLeft = document.getElementById("modal-left");
+const modalRight = document.getElementById("modal-right")
 const showModal = async(id)=>{
     modal.classList.remove("hidden");
+    let idData = {};
+    try{
+        const url = `https://openapi.programming-hero.com/api/ai/tool/${id}`;
+        const req = await fetch(url);
+        const data = await req.json();
+        idData = data.data;
+    }
+    catch(error){
+        console.log(error);
+    }
+
+    let {description, pricing, features, integrations} = idData;
+
+    let featuresLi = ""
+    for(let singleFeature in features){
+        featuresLi += `<li class="text-gray-600 text-sm">${features[singleFeature].feature_name}</li>`
+    }
+
+    let integrationsLi = '';
+    integrations.forEach(element => {
+        integrationsLi += `<li class="text-gray-600 text-sm">${element}</li>`
+    });
+
+    modalLeft.innerHTML=`
+    <p class="mb-5 w-11/12 text-xl font-semibold">${description}</p>
+        <div class="flex justify-between mb-4">
+            <div class="flex items-center p-4 h-24 w-28 rounded-2xl text-center bg-white font-semibold text-green-600">
+                <p class="leading-5">${pricing[0].price}
+                    ${pricing[0].plan}
+                </p>
+            </div>
+            <div class="flex items-center p-4 h-24 w-28 rounded-2xl text-center bg-white font-semibold text-yellow-600">
+                <p class="leading-5">${pricing[1].price}
+                        ${pricing[1].plan}
+                </p>
+            </div>
+            <div class="flex items-center p-4 h-24 w-28 font-semibold text-red-600 rounded-2xl text-center bg-white">
+                <p class="leading-5">
+                    ${pricing[2].price}
+                    ${pricing[2].plan}
+                </p>
+            </div>
+        </div>
+        <div class="flex justify-between">
+            <div>
+                 <p class="mb-3 text-xl font-semibold">Features</p>
+                    <ul class="ml-6 list-disc">
+                         ${featuresLi}
+                    </ul>
+            </div>
+        <div>
+            <p class="mb-3 text-xl font-semibold">Integrations</p>
+                <ul class="ml-6 mr-3 list-disc">
+                     ${integrationsLi}
+                </ul>
+            </div>
+        </div>
+    `
+
 }
 
 document.querySelector(".modal-close").addEventListener("click",function(){
