@@ -8,6 +8,11 @@
 </head>
 <style>
 
+@media (max-width: 768px) {
+    .modal-body{
+        overflow-y: scroll;
+    }
+}
 </style>
 <body>
 
@@ -29,7 +34,7 @@
     <!-- modal body  -->
     <div class="modal hidden h-screen w-full fixed flex justify-center items-center bg-black bg-opacity-50 top-0 left-0" id="modal">
                 
-        <div class="md:w-[72rem] w-11/12 md:max-h-screen max-h-[80%] border-4 md:p-24 md:p-6 p-4 rounded-lg bg-white relative md:overflow-x-hidden overflow-y-scroll">           
+        <div class="md:w-[72rem] w-11/12 md:max-h-screen max-h-[80%] border-4 md:p-24 p-4 rounded-lg bg-white relative modal-body">           
             <p class="modal-close md:absolute fixed bg-red-200 md:top-[-17px] md:right-[-17px] right-0 top-[8%] rounded-full p-1">
                     <img class="h-6 cursor-pointer w-6" src="icons/icons8-cross-mark-48.png" alt="">
             </p>
