@@ -160,7 +160,7 @@ const showModal = async(id)=>{
     <p class="mb-5 w-11/12 text-xl font-semibold">${description}</p>
         <div class="flex flex-wrap items-center justify-center gap-4 md:justify-between mb-4">
             <div class="flex items-center p-4 h-24 w-28 rounded-2xl text-center bg-white font-semibold text-green-600">
-                <p class="leading-5">${pricing ? pricing[0].price === "No cost" ? "Free Of Cost /" : pricing[0].price == 0 ? "$0/month" : pricing[0].price : "Free Of Cost /"}
+                <p class="leading-5">${pricing ? pricing[0].price === "No cost" ? "Free Of Cost /" : pricing[0].price == 0 ? "Free Of Cost /" : pricing[0].price : "Free Of Cost /"}
                     Basic
                 </p>
             </div>
